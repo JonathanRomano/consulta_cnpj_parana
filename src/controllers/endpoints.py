@@ -23,6 +23,8 @@ class empresaFacil(Resource):
 
         driver.get('https://www.jonathanromano.online/')
 
+        input('teste >>')
+
         y = driver.find_element_by_xpath('/html/body/div/div/main/div[1]/h1').text
         
         driver.close()
