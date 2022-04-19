@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, make_response
 from flask_restx import Api, Resource
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import ast
 
 from selenium import webdriver
@@ -27,7 +28,8 @@ class empresaFacil(Resource):
         
         body = ast.literal_eval(dict_str)
 
-        driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+        binary = FirefoxBinary('/app/vendor/firefox/firefox')
+        driver = webdriver.Firefox(firefox_binary=binary)
 
         x = body['x']
 
