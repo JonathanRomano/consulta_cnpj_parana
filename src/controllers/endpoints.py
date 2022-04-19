@@ -3,10 +3,7 @@ from flask_restx import Api, Resource
 import ast
 
 from selenium import webdriver
-from webdriver_manager.firefox import GeckoDriverManager
-import os
-
-os.system('export PATH=$PATH:/app/vendor/geckodriver/geckodriver')
+from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 
 from src.server.instance import server
 
@@ -30,8 +27,12 @@ class empresaFacil(Resource):
         
         body = ast.literal_eval(dict_str)
 
-        driver = webdriver.Firefox(executable_path='./geckodriver')
-        #driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+        # definição do driver #
+
+        binary = FirefoxBinary('/app/vendor/firefox/firefox')
+        driver = webdriver.Firefox(firefox_binary=binary)
+        
+        # definição do driver #
 
         x = body['x']
 
