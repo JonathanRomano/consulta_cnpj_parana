@@ -4,6 +4,7 @@ import ast
 
 from selenium import webdriver
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
+from selenium.webdriver import FirefoxOptions
 
 from src.server.instance import server
 
@@ -28,9 +29,12 @@ class empresaFacil(Resource):
         body = ast.literal_eval(dict_str)
 
         # definição do driver #
+        
+        opts = FirefoxOptions()
+        opts.add_argument("--headless")
 
         binary = FirefoxBinary('/app/vendor/firefox/firefox')
-        driver = webdriver.Firefox(firefox_binary=binary, executable_path='/app/vendor/geckodriver/geckodriver')
+        driver = webdriver.Firefox(firefox_binary=binary, executable_path='/app/vendor/geckodriver/geckodriver',firefox_options=opts)
         
         # definição do driver #
 
