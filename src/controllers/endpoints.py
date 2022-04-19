@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, request, make_response
 from flask_restx import Api, Resource
-from webdriver_manager.firefox import GeckoDriverManager
 import ast
 
 from selenium import webdriver
@@ -31,8 +30,8 @@ class empresaFacil(Resource):
         
         body = ast.literal_eval(dict_str)
 
-        #driver = webdriver.Firefox(executable_path='./geckodriver')
-        driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+        driver = webdriver.Firefox(executable_path='./geckodriver')
+        #driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
 
         x = body['x']
 
