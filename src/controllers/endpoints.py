@@ -31,8 +31,9 @@ class empresaFacil(Resource):
         
         body = ast.literal_eval(dict_str)
 
-        binary
-        driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
+        binary = FirefoxBinary("/app/vendor/firefox/firefox")
+        driver = webdriver.Firefox(firefox_binary=binary)
+        #driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
 
         x = body['x']
 
