@@ -5,6 +5,9 @@ import ast
 
 from selenium import webdriver
 from webdriver_manager.firefox import GeckoDriverManager
+import os
+
+os.system('export PATH=$PATH:/app/vendor/geckodriver/geckodriver')
 
 from src.server.instance import server
 
@@ -28,8 +31,8 @@ class empresaFacil(Resource):
         
         body = ast.literal_eval(dict_str)
 
-        binary = FirefoxBinary('/app/vendor/geckodriver/geckodriver')
-        driver = webdriver.Firefox(firefox_binary=binary)
+        binary
+        driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())
 
         x = body['x']
 
