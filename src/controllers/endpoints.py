@@ -30,7 +30,7 @@ class empresaFacil(Resource):
         # definição do driver #
 
         binary = FirefoxBinary('/app/vendor/firefox/firefox')
-        driver = webdriver.Firefox(firefox_binary=binary)
+        driver = webdriver.Firefox(firefox_binary=binary, executable_path='/app/vendor/geckodriver/geckodriver')
         
         # definição do driver #
 
