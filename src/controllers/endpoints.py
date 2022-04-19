@@ -34,7 +34,13 @@ class empresaFacil(Resource):
         opts.add_argument("--headless")
 
         binary = FirefoxBinary('/app/vendor/firefox/firefox')
-        driver = webdriver.Firefox(firefox_binary=binary, executable_path='/app/vendor/geckodriver/geckodriver',firefox_options=opts)
+        geckodriver_path = '/app/vendor/geckodriver/geckodriver'
+
+        driver = webdriver.Firefox(
+            firefox_binary=binary,
+            executable_path=geckodriver_path,
+            firefox_options=opts
+        )
         
         # definição do driver #
 
