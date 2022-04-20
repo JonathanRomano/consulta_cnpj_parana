@@ -37,15 +37,20 @@ class empresaFacil(Resource):
         
         # definição do driver #
 
-        driver.get('https://www.empresafacil.pr.gov.br/')
+        try:
+            driver.get('https://www.empresafacil.pr.gov.br/')
 
-        for cookie in cookie_list:
-            driver.add_cookie(cookie)
+            for cookie in cookie_list:
+                driver.add_cookie(cookie)
 
-        dados_brutos = driver.dados_dos_socios(body['cnpj'])
+            dados_brutos = driver.dados_dos_socios(body['cnpj'])
 
-        driver.close()
+            driver.close()
 
-        resultado = sanitizar_dados(dados_brutos['dados_brutos'],dados_brutos['lista_de_nomes'])
+            resultado = sanitizar_dados(dados_brutos['dados_brutos'],dados_brutos['lista_de_nomes'])
+
+        except:
+            resultado = {'Erro': 'Erro ao consultar o site do empresa facil!'}
+            driver.close()
 
         return make_response(resultado, 200)
