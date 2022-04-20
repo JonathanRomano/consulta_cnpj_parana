@@ -49,8 +49,10 @@ class empresaFacil(Resource):
 
             resultado = sanitizar_dados(dados_brutos['dados_brutos'],dados_brutos['lista_de_nomes'])
 
-        except:
-            resultado = {'Erro': 'Erro ao consultar o site do empresa facil!'}
+            return make_response(resultado, 200)
+
+        except Exception as error:
+            resultado = {'erro': error}
             driver.close()
 
-        return make_response(resultado, 200)
+            return make_response(resultado, 500)
