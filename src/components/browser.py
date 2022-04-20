@@ -28,7 +28,7 @@ class Scraping_browser(webdriver.Firefox):
                 input_cnpj.send_keys(num)
         
         time.sleep(5)
-        self.find_element(by=By.XPATH, value='/html/body/div[1]/main/div[2]/div/div[1]/form/div[6]/div/div/div/span/input').click()
+        self.find_element(by=By.NAME, value='validate').click()
         self.find_element(by=By.XPATH, value='//*[@id="botao-avancar"]').click()
         
         WebDriverWait(self, 40).until(
