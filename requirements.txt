@@ -1,5 +1,5 @@
 Flask==2.1.0
-selenium<4.0.0
+selenium==3.8.0
 webdriver-manager==3.5.4
 flask-restx==0.5.1
 gunicorn==20.1.0
