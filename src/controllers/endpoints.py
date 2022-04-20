@@ -5,18 +5,11 @@ import ast
 from selenium import webdriver
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver import FirefoxOptions
+from src.components.browser import scraping_browser, sanitizar_dados
 
 from src.server.instance import server
 
-cookie_list = [
-    {'name': '_gat', 'value': '1', 'path': '/', 'domain': '.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1650318979, 'sameSite': 'None'},
-    {'name': 'voxtecnologia-consent-cookie', 'value': 'MQ==', 'path': '/', 'domain': 'www.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1681854920, 'sameSite': 'None'},
-    {'name': 'voxtecnologia-initial-message', 'value': 'IjA2LzA0LzIwMjIi', 'path': '/', 'domain': 'www.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1651614921, 'sameSite': 'None'},
-    {'name': 'sigfacil', 'value': 'f6401f840ad4b780ef81e63361c461aa', 'path': '/', 'domain': 'www.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': True, 'sameSite': 'None'},
-    {'name': 'hgyclh-w7930', 'value': '9fa8eb2cfa2839b6ff99e6340d1c9de4', 'path': '/', 'domain': '.www.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1681854933, 'sameSite': 'None'},
-    {'name': '_ga', 'value': 'GA1.4.1176697986.1650318920', 'path': '/', 'domain': '.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1713390933, 'sameSite': 'None'},
-    {'name': '_gid', 'value': 'GA1.4.469418369.1650318920', 'path': '/', 'domain': '.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1650405333, 'sameSite': 'None'}
-]
+cookie_list = [{'name': 'sigfacil', 'value': 'b0a8df3981b5530586771c67d9ac4487', 'path': '/', 'domain': 'www.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': True, 'sameSite': 'None'}, {'name': 'voxtecnologia-consent-cookie', 'value': 'MQ==', 'path': '/', 'domain': 'www.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1681929887, 'sameSite': 'None'}, {'name': 'hgyclh-w7930', 'value': 'c748be75066377af71a4f878a95246f0', 'path': '/', 'domain': '.www.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1681929888, 'sameSite': 'None'}, {'name': 'voxtecnologia-initial-message', 'value': 'IjA2LzA0LzIwMjIi', 'path': '/', 'domain': 'www.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1651689892, 'sameSite': 'None'}, {'name': '_gat', 'value': '1', 'path': '/', 'domain': '.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1650393953, 'sameSite': 'None'}, {'name': '_ga', 'value': 'GA1.4.600446254.1650393894', 'path': '/', 'domain': '.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1713465897, 'sameSite': 'None'}, {'name': '_gid', 'value': 'GA1.4.1772386436.1650393894', 'path': '/', 'domain': '.empresafacil.pr.gov.br', 'secure': False, 'httpOnly': False, 'expiry': 1650480297, 'sameSite': 'None'}]
 
 app, api = server.app, server.api
 
@@ -36,7 +29,7 @@ class empresaFacil(Resource):
         binary = FirefoxBinary('/app/vendor/firefox/firefox')
         geckodriver_path = '/app/vendor/geckodriver/geckodriver'
 
-        driver = webdriver.Firefox(
+        driver = scraping_browser(
             firefox_binary=binary,
             executable_path=geckodriver_path,
             firefox_options=opts
@@ -44,18 +37,15 @@ class empresaFacil(Resource):
         
         # definição do driver #
 
-        x = body['x']
+        driver.get('https://www.empresafacil.pr.gov.br/')
 
-        driver.get('https://www.jonathanromano.online/')
+        for cookie in cookie_list:
+            driver.add_cookie(cookie)
 
-        y = driver.find_element_by_xpath('/html/body/div/div/main/div[1]/h1').text
-        
+        dados_brutos = driver.dados_dos_socios(body['cnpj'])
+
         driver.close()
 
-        if x == y:
-            teste = True
-            
-        else:
-            teste = False
+        resultado = sanitizar_dados(dados_brutos['dados_brutos'],dados_brutos['lista_de_nomes'])
 
-        return make_response({'result':teste}, 200)
+        return make_response(resultado, 200)

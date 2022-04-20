@@ -128,5 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# certificado digital
-certificado
+# testes locais
+local_test.py
+geckodriver
+get_cookie_list.py
