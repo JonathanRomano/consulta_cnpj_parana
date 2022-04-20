@@ -52,7 +52,7 @@ class empresaFacil(Resource):
             return make_response(resultado, 200)
 
         except Exception as error:
-            resultado = {'erro': error}
+            resultado = {'erro': str(error)}
             driver.close()
 
             return make_response(resultado, 500)
