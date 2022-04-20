@@ -27,7 +27,7 @@ class Scraping_browser(webdriver.Firefox):
             if num.isdigit():
                 input_cnpj.send_keys(num)
         
-        time.sleep(3)
+        time.sleep(5)
         self.find_element(by=By.XPATH, value='/html/body/div[1]/main/div[2]/div/div[1]/form/div[6]/div/div/div/span/input').click()
         self.find_element(by=By.XPATH, value='//*[@id="botao-avancar"]').click()
         
