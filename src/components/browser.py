@@ -126,7 +126,7 @@ def sanitizar_dados(dados, lista_de_nomes):
         lista_de_dados.pop(0)
 
     lista_de_socios = []
-    for index in range(0,len(lista_de_nomes)-1):
+    for index in range(0,len(lista_de_nomes)):
         object_socio = {}
         object_socio['name'] = lista_de_nomes[index]
 
